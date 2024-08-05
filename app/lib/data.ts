@@ -20,7 +20,9 @@ export async function fetchRevenue() {
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
     // console.log('Data fetch completed after 3 seconds.');
-
+    await new Promise((resolve) => setTimeout(() => {
+      resolve('')
+    }, 5000));
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -59,7 +61,6 @@ export async function fetchCardData() {
          SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
-
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
